@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konversi Logic Python ke Web</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        #output {
+            margin-bottom: 20px;
+            min-height: 20px;
+        }
+        #input-section {
+            display: flex;
+            flex-direction: column;
+        }
+        input {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Halo, selamat datang!</h1>
+        <div id="output"></div>
+        <div id="input-section">
+            <label for="name">Nama kamu siapa?</label>
+            <input type="text" id="name">
+            <button onclick="handleName()">Submit</button>
+        </div>
+    </div>
+
+    <script>
+        let name;
+        let kabar2;
+        let ultah;
+        let banyak;
+
+        function typeWriter(text, element, callback) {
+            let i = 0;
+            element.innerHTML = '';
+            const timer = setInterval(() => {
+                if (i < text.length) {
+                    if (text.charAt(i) === '\n') {
+                        element.innerHTML += '<p></p>';
+                    } else {
+                        element.innerHTML += text.charAt(i);
+                    }
+                    i++;
+                } else {
+                    clearInterval(timer);
+                    if (callback) callback();
+                }
+            }, 50);
+        }
+
+        function clearInput() {
+            const inputSection = document.getElementById('input-section');
+            inputSection.innerHTML = '';
+        }
+
+        function handleName() {
+            name = document.getElementById('name').value.toLowerCase();
+            const output = document.getElementById('output');
+            clearInput();
+
+            if (name === 'uli') {
+                typeWriter(`Halo ${name}, aku program yang dibuat Ridho\nKamu masih inget sama Ridho?`, output, askKabar);
+            } else {
+                typeWriter(`Boong, aku tau kamu Uli\nBtw, aku program yang dibuat Ridho\nKamu masih inget sama Ridho?`, output, askKabar);
+            }
+        }
+
+        function askKabar() {
+            const inputSection = document.getElementById('input-section');
+            inputSection.innerHTML = `
+                <label for="kabar">Sekarang kabarmu gimana? (baik/ga)</label>
+                <input type="text" id="kabar">
+                <button onclick="handleKabar()">Submit</button>
+            `;
+        }
+
+        function handleKabar() {
+            kabar2 = document.getElementById('kabar').value.toLowerCase();
+            const output = document.getElementById('output');
+            clearInput();
+
+            if (kabar2 === 'baik') {
+                typeWriter(`Allhamdulilah kalo baik`, output, askUltah);
+            } else if (kabar2 === 'ga') {
+                typeWriter(`Waduh kenapa? Aku doain supaya cepet baik ya`, output, askUltah);
+            } else {
+                typeWriter(`Kok kamu jawab nya beda dari yang kukasih sih`, output, askKabar);
+            }
+        }
+
+        function askUltah() {
+            const inputSection = document.getElementById('input-section');
+            inputSection.innerHTML = `
+                <label for="ultah">Kamu tanggal 20 kemaren ultah yah? (iya/ga)</label>
+                <input type="text" id="ultah">
+                <button onclick="handleUltah()">Submit</button>
+            `;
+        }
+
+        function handleUltah() {
+            ultah = document.getElementById('ultah').value.toLowerCase();
+            const output = document.getElementById('output');
+            clearInput();
+
+            if (ultah !== 'iya') {
+                typeWriter(`Boong mulu, katamu waktu itu ultah loh`, output, askUltah);
+            } else {
+                askBanyak();
+            }
+        }
+
+        function askBanyak() {
+            const inputSection = document.getElementById('input-section');
+            inputSection.innerHTML = `
+                <label for="banyak">Mau diucapin berapa kali?</label>
+                <input type="number" id="banyak">
+                <button onclick="handleBanyak()">Submit</button>
+            `;
+        }
+
+        function handleBanyak() {
+            banyak = parseInt(document.getElementById('banyak').value);
+            const output = document.getElementById('output');
+            clearInput();
+
+            if (banyak <= 0) {
+                typeWriter(`Serius, mau diucapin berapa kali?`, output, askBanyak);
+            } else {
+                showHBD();
+            }
+        }
+
+        function showHBD() {
+            const output = document.getElementById('output');
+            output.innerHTML = '';
+            for (let i = 0; i < banyak; i++) {
+                output.innerHTML += `<p>HAPPY BIRTHDAY ULI!</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
